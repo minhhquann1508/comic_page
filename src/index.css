@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,6 +8,53 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+:where(.css-dev-only-do-not-override-pr0fja).ant-dropdown {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.88);
+  font-size: 14px;
+  line-height: 1.5714285714285714;
+  list-style: none;
+  font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,'Noto Sans',sans-serif,'Apple Color Emoji','Segoe UI Emoji','Segoe UI Symbol','Noto Color Emoji';
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  z-index: 1050;
+  display: block;
+  width: 150px;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px; /* Đổi kích thước thanh cuộn theo ý muốn */
+  background-color: transparent; /* Màu nền của thanh cuộn */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #ccc; 
+  height: 15px;
+  border-radius: 8px;
+}
+:where(.css-dev-only-do-not-override-pr0fja).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+  position: relative;
+  background-color: #ffffff;
+  border: 2px solid #60A5FA;
+  transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+:where(.css-dev-only-do-not-override-pr0fja).ant-select-single .ant-select-selector .ant-select-selection-item {
+  padding: 4px 0 !important;
+  line-height: 30px;
+  transition: all 0.3s,visibility 0s;
+  align-self: center;
+  font-weight: 500;
+  color: rgb(72, 72, 72);
+}
+:where(.css-dev-only-do-not-override-pr0fja).ant-select .ant-select-arrow {
+  color:#60A5FA;
+  font-weight: 600;
 }
 
 code {
