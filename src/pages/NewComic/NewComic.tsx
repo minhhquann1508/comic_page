@@ -13,11 +13,10 @@ import PaginationComponent from '../../components/Pagination/Pagination';
 
 export default function NewComic():JSX.Element {
   const dispatch = useDispatch();
-  const {loading,lstNewComic} = useSelector((state:RootState) => state.newCommicReducer);
+  const {loading,lstNewComic,totalItem} = useSelector((state:RootState) => state.newCommicReducer);
   const navigate = useNavigate();
   const type = new URLSearchParams(window.location.search).get('type');
   const page = new URLSearchParams(window.location.search).get('page');
-  const total = lstNewComic ? lstNewComic.total_pages * 36 : 1000;
   useEffect(() => {
     if(page) {
       dispatch(getListNewComicAction(Number(page),String(type)));
@@ -73,7 +72,7 @@ export default function NewComic():JSX.Element {
       <section className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 mt-8'>
         {renderComics()}
       </section>
-      <PaginationComponent uri={`/new?type=${type}`} total={total}/>
+      <PaginationComponent uri={`/new?type=${type}`} total={totalItem} currentPage={page}/>
     </div>
   )
 }

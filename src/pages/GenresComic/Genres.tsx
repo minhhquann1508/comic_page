@@ -15,16 +15,15 @@ import PaginationComponent from '../../components/Pagination/Pagination';
 
 export default function Genres() {
   const dispatch = useDispatch();
-  const { loading, lstGenres, lstComicByGenres } = useSelector((state:RootState) => state.genresReducer);
+  const { loading, lstGenres, lstComicByGenres,totalItem } = useSelector((state:RootState) => state.genresReducer);
   const type = new URLSearchParams(window.location.search).get('type');
   const page = new URLSearchParams(window.location.search).get('page');
   const navigate = useNavigate();
-  const total = lstComicByGenres ? lstComicByGenres.total_pages * 36 : 1000;
   const lstOptions:[] = lstGenres ? 
   lstGenres.map((genre:GenresFormat) => ({ value: genre.id, label: genre.name })) 
     : 
   [{value: 0, label: ''}] 
-  const defaultOptions:string = lstGenres ? lstGenres.find((genre:GenresFormat) => genre.id === type) : type;
+  const defaultOptions:any = type;
   const handleChangeType = (value: string) => {
     navigate(`/genres?type=${value}`);
   };
@@ -34,7 +33,11 @@ export default function Genres() {
   },[type,page]);
 
   useEffect(() => {
-    dispatch(getLstComicsByGenreAction(String(type),Number(page)));
+    if(page) {
+      dispatch(getLstComicsByGenreAction(String(type),Number(page)));
+    } else {
+      dispatch(getLstComicsByGenreAction(String(type),1));
+    }
   },[type,page]);
 
   const renderComics = useCallback(() => {
@@ -89,7 +92,7 @@ export default function Genres() {
       <section className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 mt-8'>
         {renderComics()}
       </section>
-      <PaginationComponent uri={`/genres?type=${type}`} total={total}/>
+      <PaginationComponent uri={`/genres?type=${type}`} total={totalItem} currentPage={page}/>
     </div>
   )
 }

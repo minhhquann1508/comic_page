@@ -1,10 +1,11 @@
 import { Action } from "../../../types/type"
 import { GET_COMICS_BY_GENRES, GET_GENRES, loading } from "./types"
 
-const initialState:{loading:boolean,lstGenres:any,lstComicByGenres:any} = {
+const initialState:{loading:boolean,lstGenres:any,lstComicByGenres:any,totalItem:number} = {
     loading: false,
     lstGenres:null,
-    lstComicByGenres:null
+    lstComicByGenres:null,
+    totalItem:0
 }
 
 export const genresReducer = (state = initialState, action:Action) => {
@@ -22,6 +23,7 @@ export const genresReducer = (state = initialState, action:Action) => {
     }
     case GET_COMICS_BY_GENRES: {
         state.loading = false;
+        state.totalItem = action.payload.total_pages * 36;
         state.lstComicByGenres = action.payload;
         return { ...state};
     }
