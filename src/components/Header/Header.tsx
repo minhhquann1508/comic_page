@@ -21,7 +21,7 @@ export default function Header():JSX.Element {
                 <NavLink to='/genres?type=all'>Genres</NavLink>
               </li>
               <li className='font-semibold text-lg'>
-                <NavLink to='/new'>New Comics</NavLink>
+                <NavLink to='/new?type=all'>New Comics</NavLink>
               </li>
               <li className='font-semibold text-lg'>
                 <NavLink to='/top'>Top Comics</NavLink>

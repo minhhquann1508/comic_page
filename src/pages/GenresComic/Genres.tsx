@@ -11,6 +11,7 @@ import { RootState } from '../../redux/store';
 import { Select, Space,Skeleton } from 'antd';
 import { GenresFormat } from '../../types/comic';
 import { ERROR_IMAGE_LOADING } from '../../utils/constant';
+import PaginationComponent from '../../components/Pagination/Pagination';
 
 export default function Genres() {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ export default function Genres() {
   const type = new URLSearchParams(window.location.search).get('type');
   const page = new URLSearchParams(window.location.search).get('page');
   const navigate = useNavigate();
+  const total = lstComicByGenres ? lstComicByGenres.total_pages * 36 : 1000;
   const lstOptions:[] = lstGenres ? 
   lstGenres.map((genre:GenresFormat) => ({ value: genre.id, label: genre.name })) 
     : 
@@ -29,7 +31,7 @@ export default function Genres() {
 
   useEffect(() => {
     dispatch(getLstGenresAction());
-  },[type]);
+  },[type,page]);
 
   useEffect(() => {
     dispatch(getLstComicsByGenreAction(String(type),Number(page)));
@@ -87,6 +89,7 @@ export default function Genres() {
       <section className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 mt-8'>
         {renderComics()}
       </section>
+      <PaginationComponent uri={`/genres?type=${type}`} total={total}/>
     </div>
   )
 }

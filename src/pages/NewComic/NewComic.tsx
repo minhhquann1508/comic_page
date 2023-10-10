@@ -17,6 +17,7 @@ export default function NewComic():JSX.Element {
   const navigate = useNavigate();
   const type = new URLSearchParams(window.location.search).get('type');
   const page = new URLSearchParams(window.location.search).get('page');
+  const total = lstNewComic ? lstNewComic.total_pages * 36 : 1000;
   useEffect(() => {
     if(page) {
       dispatch(getListNewComicAction(Number(page),String(type)));
@@ -66,16 +67,13 @@ export default function NewComic():JSX.Element {
     }
   },[lstNewComic])  
   
-  console.log(lstNewComic);
-  
-
   return (
     <div className='container mx-auto px-3 py-10'>
       <h1 className='text-3xl font-bold text-blue-400 mb-8'><FontAwesomeIcon icon={faCrown} /> New</h1>
       <section className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 mt-8'>
         {renderComics()}
       </section>
-      <PaginationComponent/>
+      <PaginationComponent uri={`/new?type=${type}`} total={total}/>
     </div>
   )
 }
