@@ -9,7 +9,7 @@ import { faRankingStar } from '@fortawesome/free-solid-svg-icons';
 
 export default function Home():JSX.Element {
   const dispatch = useDispatch();
-  const {lstRecommendComics,lstTopComics} = useSelector((state:RootState) => state.homeReducer);
+  const {loading,lstRecommendComics,lstTopComics} = useSelector((state:RootState) => state.homeReducer);
   useEffect(() => {
     dispatch(getRecommendComicsAction());
     dispatch(getTopComicsAction())

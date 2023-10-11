@@ -9,6 +9,8 @@ import 'swiper/css/autoplay';
 import 'swiper/css/zoom';
 import { limitCharacters } from '../../utils/globalFunc';
 import { useNavigate } from 'react-router-dom';
+import { Skeleton } from 'antd';
+import { ERROR_IMAGE_LOADING } from '../../utils/constant';
 
 export default function Carousel(props) {
     const { data } = props;
@@ -36,13 +38,15 @@ export default function Carousel(props) {
                 }
             }}
         >
-            {data?.map((comic) => {
+            {data ? data.map((comic) => {
                 return (
                     <SwiperSlide key={comic.id}>
                         <div className='relative cursor-pointer' onClick={() => navigate(`/detail/${comic.id}`)}>
-                            {/* <div className='absolute flex gap-1 left-1 top-1 w-full h-6 z-10'>
-                            </div> */}
-                            <img className='w-full aspect-[2/3] rounded-lg object-cover object-center scale-[1.01] hover:scale-105 duration-300 origin-bottom select-none' src={comic.thumbnail} alt="anh" />
+                            <img
+                                onError={(e) => e.target.src = ERROR_IMAGE_LOADING}
+                                className='w-full aspect-[2/3] rounded-lg object-cover object-center scale-[1.01] hover:scale-105 duration-300 origin-bottom select-none'
+                                src={comic.thumbnail} alt="anh"
+                            />
                             <div className='py-2'>
                                 <h5 className='hover:text-blue-400 cursor-pointer duration-200 font-semibold'>{limitCharacters(comic.title, 15)}</h5>
                                 <p className='text-sm'>Cập nhật: {comic.updated_at}</p>
@@ -50,7 +54,15 @@ export default function Carousel(props) {
                         </div>
                     </SwiperSlide>
                 )
-            })}
+            }) :
+                new Array(20).fill(null).map((_, index) => {
+                    return (
+                        <SwiperSlide key={index} >
+                            <Skeleton />
+                        </SwiperSlide>
+                    )
+                })
+            }
         </Swiper>
     )
 }

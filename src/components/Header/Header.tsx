@@ -2,12 +2,22 @@ import React, { useState } from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faClockRotateLeft,faMagnifyingGlass,faBars} from '@fortawesome/free-solid-svg-icons';
 import Navigate from '../Navigate/Navigate';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useFormik } from 'formik';
 export default function Header():JSX.Element {
   const [isShow,setIsShow] = useState(false);
+  const navigate = useNavigate();
+  const formik = useFormik({
+    initialValues:{
+      keyword:''
+    },
+    onSubmit:(value:any) => {
+      navigate(`/search/${value.keyword}`)
+    }
+  })
   return (
     <>
-      <div className='border-b-2 fixed top-0 left-0 w-full bg-white z-30'>
+      <div className='border-b-2 fixed top-0 left-0 w-full bg-white' style={{zIndex:999999}}>
         <header className='flex justify-between gap-3 items-center px-3 py-4 container mx-auto '>
           <NavLink to='/' className='block lg:w-1/5'>
             <img src="https://img.pikbest.com/png-images/20190918/cartoon-snail-loading-loading-gif-animation_2734139.png!bw700"  
@@ -24,7 +34,7 @@ export default function Header():JSX.Element {
                 <NavLink to='/new?type=all'>New Comics</NavLink>
               </li>
               <li className='font-semibold text-lg'>
-                <NavLink to='/top'>Top Comics</NavLink>
+                <NavLink to='/top?tab=all'>Top Comics</NavLink>
               </li>
             </ul>
             <ul className='flex gap-5 items-center'>
@@ -32,9 +42,9 @@ export default function Header():JSX.Element {
                 <a href=""><FontAwesomeIcon icon={faClockRotateLeft} /></a>
               </li>
               <li>
-                <form className='border px-3 py-2 focus-within:border-blue-400 rounded-full'>
-                  <input type="text" className='focus:outline-none text-sm mr-2' placeholder='Search comics / authors'/>
-                  <button>
+                <form onSubmit={formik.handleSubmit} className='border px-3 py-2 focus-within:border-blue-400 rounded-full'>
+                  <input type="text" name='keyword' onChange={formik.handleChange} onBlur={formik.handleBlur} className='focus:outline-none text-sm mr-2' placeholder='Search comics / authors'/>
+                  <button type='submit'>
                     <FontAwesomeIcon icon={faMagnifyingGlass}/>
                   </button>
                 </form>

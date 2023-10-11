@@ -28,6 +28,18 @@ class ComicService extends BaseService {
     getNewComic = (page:number = 1,status:string = 'all') => {
         return this.get(`new-comics?page=${page}&status=${status}`);
     }
+
+    getTopComicByType = (type:string,page:number,status:string) => {
+        if(type === 'all') {
+            return this.get(`top?page=${page}&status=${status}`);
+        } else {
+            return this.get(`top/${type}?page=${page}&status=${status}`);
+        }
+    }
+
+    getComicByKeyword = (keyword:string,page:number) => {
+        return this.get(`search?q=${keyword}&page=${page}`);
+    }
 }
 
 export const comicsService = new ComicService();

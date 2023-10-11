@@ -23,7 +23,7 @@ export const genresReducer = (state = initialState, action:Action) => {
     }
     case GET_COMICS_BY_GENRES: {
         state.loading = false;
-        state.totalItem = action.payload.total_pages * 36;
+        state.totalItem = (action.payload.total_pages - 1) * 36;
         state.lstComicByGenres = action.payload;
         return { ...state};
     }

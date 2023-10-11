@@ -23,7 +23,7 @@ const routes = [
                 element:lazy(() => import('./../pages/TopComic/TopComic')),
             },
             {
-                path:'/search',
+                path:'/search/:keyword',
                 element:lazy(() => import('./../pages/SearchComic/SearchComic')),
             },
             {
