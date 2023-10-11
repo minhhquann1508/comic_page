@@ -17,7 +17,7 @@ export default function Header():JSX.Element {
   })
   return (
     <>
-      <div className='border-b-2 fixed top-0 left-0 w-full bg-white' style={{zIndex:999999}}>
+      <div className='border-b-2 fixed top-0 left-0 w-full bg-white' style={{zIndex:9999}}>
         <header className='flex justify-between gap-3 items-center px-3 py-4 container mx-auto '>
           <NavLink to='/' className='block lg:w-1/5'>
             <img src="https://img.pikbest.com/png-images/20190918/cartoon-snail-loading-loading-gif-animation_2734139.png!bw700"  

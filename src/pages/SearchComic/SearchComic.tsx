@@ -26,10 +26,11 @@ export default function SearchComic():JSX.Element {
           return (
             <div key={index} 
               onClick={() => navigate(`/detail/${comic.id}`)}
-              className='group cursor-pointer hover:bg-gray-200 duration-200 flex gap-5 bg-gray-50 border border-gray-150 p-3 rounded-md'
+              className='group cursor-pointer hover:bg-gray-200 duration-200 flex gap-5 bg-gray-50 border border-gray-150 p-3 rounded-md
+              flex-col items-center md:flex-row md:items-start'
             >
               <img 
-                className='rounded aspect-[2/3] w-44 sm:w-auto sm:h-36 border border-blue-300 object-cover"' 
+                className='rounded aspect-[2/3] w-44 sm:w-auto sm:h-44 border border-blue-300 object-cover"' 
                 src={comic.thumbnail}
                 onError={(e) => (e.target as HTMLImageElement).src = ERROR_IMAGE_LOADING}
                 alt={comic.title} 
@@ -38,9 +39,9 @@ export default function SearchComic():JSX.Element {
                 <h3 className='group-hover:text-blue-400 duration-200 text-lg text-black leading-5 font-semibold mb-2'>{comic.title}</h3>
                 <p className='text-sm line-clamp-2 font-semibold text-gray-500 mb-3 leading-6'>{comic.short_description}</p>
                 <ul className='flex flex-wrap gap-2'>
-                  {comic.genres.map((genre:GenresFormat) => {
+                  {comic.genres.map((genre:GenresFormat,i:number) => {
                     return (
-                      <li key={genre.id} className='bg-cyan-100 text-cyan-800 text-xs px-2.5 py-0.5 rounded-full font-medium'>{genre.name}</li>
+                      <li key={i} className='bg-cyan-100 text-cyan-800 text-xs px-2.5 py-0.5 rounded-full font-medium'>{genre.name}</li>
                     )
                   })}
                 </ul>
@@ -63,7 +64,7 @@ export default function SearchComic():JSX.Element {
   return (
     <div className='flex justify-center py-10'>
       <section className='w-4/5'>
-        <div className='grid grid-cols-2 gap-10' style={{minHeight:600}}>
+        <div className='grid lg:grid-cols-2 gap-10' style={{minHeight:600}}>
           {renderComic()}
         </div>
         <PaginationComponent uri={`/search/${keyword}?type=all`} total={totalItem} currentPage={page}/>

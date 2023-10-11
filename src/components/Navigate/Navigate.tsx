@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 
 export default function Navigate(props:any):JSX.Element {
     return (
-        <div className='lg:hidden z-50 top-0 fixed w-full h-full bg-black bg-opacity-90'>
+        <div className='lg:hidden top-0 fixed w-full h-full bg-black bg-opacity-90' style={{zIndex:99999}}>
             <nav className='bg-white opacity-100 h-full absolute right-0'>
                 <ul className='flex flex-col justify-around gap-5 p-5'>
                     <li className='text-right'>
