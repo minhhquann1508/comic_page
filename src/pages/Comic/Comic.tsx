@@ -9,6 +9,7 @@ import Loading from '../../components/Loading/Loading';
 
 export default function Comic():JSX.Element {
   const {lstChapterImg,loading} = useSelector((state:RootState) => state.chapterReducer);
+  const [showOptional,setShowOptional] = useState<boolean>(false);
   const dispatch = useDispatch();
   const {comicId,chapterId} = useParams();
   useEffect(() => {
@@ -16,7 +17,7 @@ export default function Comic():JSX.Element {
   }, [comicId,chapterId])
   
   const renderChapterImage = useCallback(() => {
-    if(lstChapterImg && !loading) {
+    if(lstChapterImg) {
       return lstChapterImg.images.map((image:ChapterImage) => {
         return (
           <img className='w-full object-cover' 
@@ -33,14 +34,17 @@ export default function Comic():JSX.Element {
 
   return (
     <>
-      <div className='flex justify-center bg-zinc-800'>
-        <div className='sm:w-2/3'>
+      <div className='flex justify-center bg-zinc-800' onClick={() => setShowOptional((prev:boolean) => !prev)}>
+        <div className='sm:w-2/3' style={{minHeight:700}}>
           {renderChapterImage()}
         </div>
       </div>
-      <OptionalBar currentChapterId={chapterId} 
+      <OptionalBar 
+          isShowOptional={showOptional}
+          currentChapterId={chapterId} 
           currentComicId={comicId} 
-          chapters={lstChapterImg?.chapters}/>
+          chapters={lstChapterImg?.chapters}
+      />
     </>
   )
 }

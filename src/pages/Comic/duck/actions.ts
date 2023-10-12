@@ -11,11 +11,11 @@ const loadingAction = ():Action => {
 
 export const getChapterImageAction = (idComic:string,idChapter:number):any => {
     return async (dispatch:any) => {
-        dispatch(loadingAction())
+        await dispatch(loadingAction())
         try {
             const result = await comicsService.getSingleComicsChapter(idComic,idChapter);
             if(result.status === 200) {
-                dispatch({
+                await dispatch({
                     type: GET_SINGLE_CHAPTER_COMICS,
                     payload: result.data 
                 });

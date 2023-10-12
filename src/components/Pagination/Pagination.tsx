@@ -9,7 +9,7 @@ export default function PaginationComponent(props:any):JSX.Element {
   }
   return (
     <div className='flex justify-center mt-10'>
-        <Pagination defaultCurrent={1} current={currentPage ? Number(currentPage) : 1} onChange={handleChangPage} pageSize={36} total={total} showSizeChanger={false}/>
+        <Pagination defaultCurrent={1} simple={true} current={currentPage ? Number(currentPage) : 1} showQuickJumper={false} onChange={handleChangPage} pageSize={36} total={total} showSizeChanger={false}/>
     </div>
   )
 }

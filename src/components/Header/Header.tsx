@@ -1,20 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faClockRotateLeft,faMagnifyingGlass,faBars} from '@fortawesome/free-solid-svg-icons';
+import {faClockRotateLeft,faBars} from '@fortawesome/free-solid-svg-icons';
 import Navigate from '../Navigate/Navigate';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { useFormik } from 'formik';
+import { NavLink, useLocation } from 'react-router-dom';
+import SearchBox from '../SearchBox/SearchBox';
 export default function Header():JSX.Element {
   const [isShow,setIsShow] = useState(false);
-  const navigate = useNavigate();
-  const formik = useFormik({
-    initialValues:{
-      keyword:''
-    },
-    onSubmit:(value:any) => {
-      navigate(`/search/${value.keyword}`)
-    }
-  })
+  const location = useLocation();
+
+  useEffect(() => {
+    setIsShow(false);
+  }, [location])
+  
+
   return (
     <>
       <div className='border-b-2 fixed top-0 left-0 w-full bg-white' style={{zIndex:9999}}>
@@ -42,12 +40,7 @@ export default function Header():JSX.Element {
                 <a href=""><FontAwesomeIcon icon={faClockRotateLeft} /></a>
               </li>
               <li>
-                <form onSubmit={formik.handleSubmit} className='border px-3 py-2 focus-within:border-blue-400 rounded-full'>
-                  <input type="text" name='keyword' onChange={formik.handleChange} onBlur={formik.handleBlur} className='focus:outline-none text-sm mr-2' placeholder='Search comics / authors'/>
-                  <button type='submit'>
-                    <FontAwesomeIcon icon={faMagnifyingGlass}/>
-                  </button>
-                </form>
+                <SearchBox />
               </li>
             </ul>
           </nav>
@@ -56,7 +49,7 @@ export default function Header():JSX.Element {
           </button>
         </header>
       </div>
-      {isShow ? <Navigate setIsShow={setIsShow}/> : ''}
+      {isShow ? <Navigate setIsShow={setIsShow} isShow={isShow}/> : ''}
     </>
     
   )

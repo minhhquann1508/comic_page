@@ -80,7 +80,12 @@ export default function Detail():JSX.Element {
               <div className='flex flex-wrap gap-3 mb-2'>
                 {comicDetail?.genres.map((genre:GenresFormat) => {
                   return (
-                    <button className='border-blue-400 border-2 py-1 px-2 rounded-md text-sm font-medium hover:bg-blue-400 duration-300' key={genre.id}>{genre.name}</button>
+                    <button 
+                      onClick={() => navigate(`/genres?type=${genre.id}`)}
+                      className='border-blue-400 border-2 py-1 px-2 rounded-md text-sm font-medium hover:bg-blue-400 duration-300' 
+                      key={genre.id}>
+                      {genre.name}
+                    </button>
                   )
                 })}
               </div>

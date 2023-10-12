@@ -1,8 +1,21 @@
 import React,{useState} from 'react'
 import { NavLink, useNavigate } from 'react-router-dom';
+import { useSpring,animated } from 'react-spring';
 
 export default function OptionalBar(props:any):JSX.Element {
-    const {currentChapterId,chapters,currentComicId} = props;
+    const openAnimation = useSpring({
+        opacity: 1,
+        bottom:0,
+        from: { opacity: 0, bottom: -100 },
+        config: { duration: 500 },
+    });
+    const closeAnimation = useSpring({
+        opacity: 0,
+        right: -100,
+        from: { opacity: 1, right: 0 },
+        config: { duration: 500 },
+    });
+    const {currentChapterId,chapters,currentComicId,isShowOptional} = props;
     const [showEp,setShowEp] = useState(false);
     const navigate = useNavigate();
     const index = chapters?.findIndex((chapter:any) => chapter.id == currentChapterId);
@@ -19,7 +32,10 @@ export default function OptionalBar(props:any):JSX.Element {
         }
     }
     return (
-        <div className='fixed bottom-0 left-0 w-full bg-black bg-opacity-70 py-4 flex justify-center gap-2'>
+        <animated.div 
+            style={openAnimation}
+            className={`${isShowOptional ? '' : 'hidden'} fixed bottom-0 left-0 w-full bg-black bg-opacity-70 py-4 flex justify-center gap-2`}
+        >
             <button
                 onClick={() => changeChapter(false)} 
                 disabled={!prevBtnCondition} 
@@ -39,14 +55,14 @@ export default function OptionalBar(props:any):JSX.Element {
                 <div className={`${showEp ? '' : 'hidden'} z-10 absolute bg-zinc-900 w-60 py-3 rounded bottom-9 text-white right-full translate-x-1/3 sm:translate-x-1/2 sm:right-1/2 text-left duration-200 origin-bottom scale-100`}>
                     <h5 className='px-4 mb-2'>All Episodes ({chapters?.length})</h5>
                     <ul className='custom-scrollbar overflow-auto text-sm h-max max-h-72 font-semibold'>
-                        {chapters?.map((chapter:any) => {
+                        {chapters?.map((chapter:any,index:number) => {
                             return (
-                                <NavLink to={`/comic/${currentComicId}/${chapter.id}`} className='py-2 block truncate px-5 duration-100 hover:bg-zinc-950'>{chapter.name.replace('Chuong','Chương')}</NavLink>
+                                <NavLink key={index} to={`/comic/${currentComicId}/${chapter.id}`} className='py-2 block truncate px-5 duration-100 hover:bg-zinc-950'>{chapter.name.replace('Chuong','Chương')}</NavLink>
                             )
                         })}
                     </ul>
                 </div>
             </button>
-        </div>
+        </animated.div>
     )
 }

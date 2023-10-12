@@ -55,7 +55,7 @@ export default function TopComic():JSX.Element {
 
   return (
     <div className='container mx-auto px-3 py-10'>
-      <div className='flex items-center gap-7'>
+      <div className='flex gap-7 sm flex-col md:flex-row md:items-center'>
         <h1 className='text-3xl font-bold text-blue-400'><FontAwesomeIcon icon={faCrown} /> Top</h1>
         <div className='flex gap-5 items-center'>
           <Select
